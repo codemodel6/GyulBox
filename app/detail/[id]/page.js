@@ -1,5 +1,6 @@
 import { connectDB } from "@/util/database";
 import { ObjectId } from "mongodb";
+import Comment from "./Comment";
 
 // props에는 url의 값인 params가 있음(여기선 params: {'id':'1'})
 export default async function Detail(props) {
@@ -16,6 +17,7 @@ export default async function Detail(props) {
       <h4>상세페이지</h4>
       <h4>{result.title}</h4>
       <p>{result.content}</p>
+      <Comment />
     </div>
   );
 }
