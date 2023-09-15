@@ -68,3 +68,13 @@ Next-auth 사용
 4. 내가 쓰던 DB에 나오게 하고 싶다면, DB연결 코드 마지막에 DB 이름을 적는다.
 5. 서버 코드에서 session = getServerSession(req,res,authOptions) 을 사용해서 현재 유저의 정보를 가져온다
 6. body 속성에 새로운 key value로 계정의 이메일을 넣어준다.
+
+# Client -> Server
+
+클라이언트에서 서버로 Body를 전달할때
+클라이언트는 Body를
+body : JSON.stringify({ id: id, comment: comment}),
+이와 같이 묶은 후
+서버에서는 요청의 Body를
+req.body = JSON.parse(req.body);
+이와 같이 풀어주어야 한다
