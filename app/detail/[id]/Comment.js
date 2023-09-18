@@ -3,19 +3,19 @@
 import { useEffect, useState } from "react";
 
 export default function Comment(props) {
-  let [comment, setComment] = useState();
-  let [data, setData] = useState();
+  let [comment, setComment] = useState("");
+  let [data, setData] = useState([]);
 
   useEffect(() => {
     fetch(`/api/comment/list?id=${props.id}`)
       .then((e) => e.json)
-      .then((e) => console.log("?", e));
-  });
+      .then((result) => setData(result));
+  }, []);
 
   return (
     <div>
       <div>댓글목록</div>
-      {data}
+
       {/* {data.map((it, idx) => {
         return <p>{it.content}</p>;
       })} */}
