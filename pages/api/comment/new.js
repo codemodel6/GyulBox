@@ -4,6 +4,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]";
 
 export default async function handler(req, res) {
+  const db = (await connectDB).db("dbname");
+
   if (req.method === "POST") {
     // 클라이언트에서 JSON.stringify로 보냈으므로 서버에서는 JSON.parse로 받아야 한다
     req.body = JSON.parse(req.body);
@@ -20,8 +22,15 @@ export default async function handler(req, res) {
       comment: req.body.comment,
       author: session.user.email,
     };
-    const db = (await connectDB).db("dbname");
-    let result = await db.collection("comment").insertOne(saveItem);
-    res.status(200).json("저장완료");
+
+    // DB에 saveItem의 값ㅇ르 저장
+    let saveResult = await db.collection("comment").insertOne(saveItem);
+
+    // 저장이 된 DB의 결과값을 응답한다
+    let result = await db
+      .collection("comment")
+      .find({ boardID: new ObjectId(req.body.id) })
+      .toArray();
+    res.status(200).json(result);
   }
 }

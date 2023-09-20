@@ -7,18 +7,23 @@ export default function Comment(props) {
   let [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch(`/api/list?id=${props.id}`)
-      .then((e) => e.json)
-      .then((result) => console.log(result));
+    fetch(`/api/comment/list?id=${props.id}`)
+      .then((e) => e.json())
+      .then((e) => setData(e));
   }, []);
 
   return (
     <div>
       <div>댓글목록</div>
+      <hr></hr>
 
-      {data.map((it, idx) => {
-        return <p>{it.content}</p>;
-      })}
+      {data.length > 0 ? (
+        data.map((it, idx) => {
+          return <div key={idx}>{it.comment}</div>;
+        })
+      ) : (
+        <div>댓글이 없습니다</div>
+      )}
       <input
         onChange={(e) => {
           setComment(e.target.value);
@@ -30,7 +35,9 @@ export default function Comment(props) {
           fetch("/api/comment/new", {
             method: "POST",
             body: JSON.stringify({ comment: comment, id: props.id }),
-          });
+          })
+            .then((e) => e.json())
+            .then((result) => setData(result));
         }}
       >
         댓글전송
