@@ -7,18 +7,18 @@ export default function Comment(props) {
   let [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch(`/api/comment/list?id=${props.id}`)
+    fetch(`/api/list?id=${props.id}`)
       .then((e) => e.json)
-      .then((result) => setData(result));
+      .then((result) => console.log(result));
   }, []);
 
   return (
     <div>
       <div>댓글목록</div>
 
-      {/* {data.map((it, idx) => {
+      {data.map((it, idx) => {
         return <p>{it.content}</p>;
-      })} */}
+      })}
       <input
         onChange={(e) => {
           setComment(e.target.value);
