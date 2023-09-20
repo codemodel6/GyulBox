@@ -12,6 +12,11 @@ export default async function Detail(props) {
     .collection("clname")
     .findOne({ _id: new ObjectId(props.params.id) });
 
+  // 에러가 날 시 not-found.js의 컴포넌트를 보여준다
+  if (result == null) {
+    return notFound();
+  }
+
   return (
     <div>
       <h4>상세페이지</h4>

@@ -78,3 +78,10 @@ body : JSON.stringify({ id: id, comment: comment}),
 서버에서는 요청의 Body를
 req.body = JSON.parse(req.body);
 이와 같이 풀어주어야 한다
+
+# Loading, Error 페이지
+
+페이지에서 에러가 난다면 현재 디렉토리의 error.js를 가장 먼저 찾는다
+현재 디렉토리의 error.js가 없다면 상위 폴더를 올라가며 error.js를 계속 찾는다
+로딩페이지도 똑같다.
+만약 모든 페이지 에러 처리 하고 싶다면 global-error.js를 만들면 된다
